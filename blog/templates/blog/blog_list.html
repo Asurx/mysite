@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block nav_blog_active %}active{% endblock %}
+
+{% block title %}Asurx星痕's Blog{% endblock %}
+
+{% load static %}
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
+{% endblock %}
+
+{# 内容 #}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h3>Asurx星痕's Blogs{% block blog_list_title_extends %}{% endblock %}</h3>
+        <p class="blog-info">共{{ num_all }}篇</p><hr>
+        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8">
+            {% for blog in page %}
+                <div class="blog">
+                    <h3><a href="{% url 'blog_detail' blog.pk%}">{{ blog.title }}</a></h3>
+                    <p class="blog-info">
+                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                        <a href="{% url 'blog_list_with_type' blog.blog_type.pk %}">
+                            {{ blog.blog_type }}
+                        </a>
+                        作者: {{ blog.author }}
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        {{ blog.created_time|date:"Y-m-d H:n:s" }}
+                    </p>
+                    <p>{{ blog.content|truncatechars:30 }}...</p>
+                </div>
+            {% empty %}
+                <div class="blog">
+                    <p>-- empty --</p>
+                </div>
+            {% endfor %}
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="{% if not page.has_previous %}disabled{% endif %}">
+                        <a {% if page.has_previous %}href="/blog/?page={{ page.previous_page_number }}"{% endif %}
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    {% for page_num in page.paginator.page_range %}
+                        <li class="{% ifequal page.number page_num %}active{% endifequal %}">
+                            <a href="/blog/?page={{ page_num }}">{{ page_num }}</a>
+                        </li>
+                    {% endfor %}
+
+                    <li class="{% if not page.has_next %}disabled{% endif %}">
+                        <a {% if page.has_next %}href="/blog/?page={{ page.next_page_number }}"{% endif %}
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4">
+            <h4>分类</h4><hr>
+            <div class="list-group">
+                <a class="list-group-item {% if active_all %}active{% endif %}" href="{% url 'blog_list' %}">
+                    <span class="badge">{{num_all}}</span>
+                    所有
+                </a>
+                {% for type in types %}
+                <a class="list-group-item {% if type.active %}active{% endif %}" href="{% url 'blog_list_with_type' type.blog_type.pk %}">
+                    <span class="badge">{{type.num}}</span>
+                    {{type.blog_type}}
+                </a>
+                {% empty %}
+                    <a>-- empty --</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

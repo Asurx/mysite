@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{# 标题 #}
+{% block title %}{{blog.title}}{% endblock %}
+
+{% load static %}
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
+{% endblock %}
+
+{# 内容 #}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+            <h3>{{ blog.title }}</h3>
+
+            <ul class="blog-info">
+                <li>作者: {{ blog.author }}</li>
+                <li>
+                    分类：<a href="{% url 'blog_list_with_type' blog.blog_type.pk %}">{{ blog.blog_type }}</a>
+                </li>
+                <li>发布时间：{{ blog.created_time|date:"Y-m-d H:n:s" }}</li>
+            </ul>
+            <div class="blog-content">{{ blog.content }}</div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
