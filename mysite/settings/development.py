@@ -33,13 +33,12 @@ ALLOWED_HOSTS = ['127.0.0.1', '192.168.31.216', '47.95.201.6', ]
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mysite_db',
-        'USER': 'root',
-        'PASSWORD': 'xb0210092piano',
+        'USER': 'asurx',
+        'PASSWORD': 'xb021009',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
