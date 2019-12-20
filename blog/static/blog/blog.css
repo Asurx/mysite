@@ -1,7 +1,7 @@
 div.blog:not(:last-child){
     margin-bottom: 2em;
     padding-bottom: 1em;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 2px solid #87CEEB;
 }
 div.blog h3{
     margin-top: 0.5em;
@@ -21,5 +21,5 @@ ul.blog-info li{
     margin-right: 2em;
 }
 div.blog-content{
-    text-indent: 2em;
+    #text-indent: 2em;
 }

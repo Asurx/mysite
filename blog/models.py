@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class BlogType(models.Model):
@@ -13,7 +13,8 @@ class BlogType(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=50)
     blog_type = models.ForeignKey(BlogType, on_delete=models.DO_NOTHING)
-    content = models.TextField()
+    # content = models.TextField()
+    content = RichTextField()
 
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
