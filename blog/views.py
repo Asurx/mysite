@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from .models import BlogType, Blog
-
+from markdown import markdown
 
 # Create your views here.
 def blog_list(request):
@@ -53,4 +53,9 @@ def blog_list_with_type(request, blog_type_pk):
 def blog_detail(request, blog_pk):
     context = {}
     context['blog'] = get_object_or_404(Blog, pk=blog_pk)
+    context['blog'].content = markdown(context['blog'].content, extensions=[
+        'markdown.extensions.extra',
+        'markdown.extensions.codehilite',
+        'markdown.extensions.toc',
+    ])
     return render(request, 'blog/blog_detail.html', context)
